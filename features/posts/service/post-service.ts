@@ -1,4 +1,4 @@
-import { InMemoryPostRepository } from "@/features/posts/repository/in-memory-post-repository";
+import { createPostRepository } from "@/features/posts/repository/create-post-repository";
 import type { PostRepository } from "@/features/posts/repository/post-repository";
 
 export class PostService {
@@ -17,4 +17,4 @@ export class PostService {
   }
 }
 
-export const postService = new PostService(new InMemoryPostRepository());
+export const postService = new PostService(createPostRepository());
