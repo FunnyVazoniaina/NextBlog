@@ -15,7 +15,7 @@ const backendCapabilities = [
   {
     title: "Repository pattern",
     description:
-      "An in-memory source powers the blog today and can later be swapped for a database or CMS.",
+      "MongoDB Atlas is now the primary content source, with a local fallback while the placeholder URI is still in use.",
   },
   {
     title: "Route handlers",
@@ -42,8 +42,8 @@ export default async function Home() {
             </h2>
             <p className="text-lg leading-8 text-stone-600">
               The public pages are rendered as server components, the backend is
-              already exposed through route handlers, and the post model is
-              isolated behind a service contract for future data sources.
+              exposed through route handlers, and the post model now maps
+              cleanly to MongoDB Atlas through a dedicated repository.
             </p>
             <p className="text-base leading-7 text-stone-500">
               Built for {siteConfig.author.name}, with enough structure to grow
