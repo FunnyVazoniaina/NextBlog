@@ -18,3 +18,7 @@ export interface PostSummary {
 export interface Post extends PostSummary {
   content: string[];
 }
+
+export interface PostDocument extends Omit<Post, "publishedAt"> {
+  publishedAt: string | Date;
+}
