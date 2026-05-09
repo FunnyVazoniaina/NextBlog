@@ -6,8 +6,24 @@ The project ships with a minimal but scalable structure:
 
 - Server-rendered public pages for the homepage, blog index, and article pages
 - Route handlers for health checks and blog post retrieval
-- A service and repository layer so the content source can move from in-memory data to a database or CMS later
+- A service and repository layer aligned with MongoDB Atlas
 - Reusable layout and post components
+
+## Environment
+
+Create a `.env.local` from the example and replace the placeholder Atlas URI when you are ready to connect a real cluster:
+
+```bash
+cp .env.example .env.local
+```
+
+```env
+MONGODB_URI="mongodb+srv://atlas-user:atlas-password@cluster0.example.mongodb.net/monblog?retryWrites=true&w=majority&appName=monblog"
+MONGODB_DB_NAME="monblog"
+MONGODB_POSTS_COLLECTION="posts"
+```
+
+As long as the placeholder URI is still present, the app falls back to the local seed posts so the pages and APIs keep working during setup.
 
 ## Scripts
 
@@ -37,12 +53,13 @@ features/
   posts/
 lib/
   config/
+  mongodb/
   utils/
 types/
 ```
 
 ## Next steps
 
-- Replace the in-memory repository with a database or headless CMS
+- Seed the Atlas `posts` collection with real content
 - Add authentication and an admin writing interface
 - Add SEO enrichments such as sitemap, RSS, and structured metadata
