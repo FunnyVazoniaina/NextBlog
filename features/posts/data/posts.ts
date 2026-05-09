@@ -15,7 +15,7 @@ export const posts: Post[] = [
     status: "published",
     content: [
       "A personal blog should be easy to publish from on day one, but it should also leave room for richer workflows later. That is why I like to separate the content model, the repository contract, and the presentation layer early.",
-      "In the short term, local in-memory content keeps the code fast to move in. In the medium term, the exact same service contract can point to a database, CMS, or MDX source without rewriting the whole site.",
+      "In the short term, a lightweight local seed keeps setup fast. In the medium term, the exact same service contract can point to MongoDB Atlas, a CMS, or MDX without rewriting the whole site.",
       "That small bit of structure gives the frontend a stable API, which keeps the project comfortable to maintain as the number of posts, pages, and features grows.",
     ],
   },
