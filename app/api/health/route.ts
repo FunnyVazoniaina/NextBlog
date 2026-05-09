@@ -7,7 +7,7 @@ export async function GET() {
   const database = await getDatabaseHealth();
 
   return NextResponse.json({
-    status: database.status === "error" ? "degraded" : "ok",
+    status: database.status === "connected" ? "ok" : "degraded",
     application: siteConfig.name,
     timestamp: new Date().toISOString(),
     database,

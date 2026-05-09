@@ -9,6 +9,7 @@ export const metadata = {
 
 export default async function BlogPage() {
   const posts = await postService.getPublishedPosts();
+  const hasPosts = posts.length > 0;
 
   return (
     <Container className="py-16 sm:py-20">
@@ -25,11 +26,23 @@ export default async function BlogPage() {
         </p>
       </div>
 
-      <div className="mt-12 grid gap-6 lg:grid-cols-2">
-        {posts.map((post) => (
-          <PostCard key={post.slug} post={post} />
-        ))}
-      </div>
+      {hasPosts ? (
+        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+          {posts.map((post) => (
+            <PostCard key={post.slug} post={post} />
+          ))}
+        </div>
+      ) : (
+        <div className="mt-12 rounded-[2rem] border border-dashed border-black/15 bg-stone-50 p-8">
+          <p className="text-lg font-semibold text-stone-900">
+            No published posts were found in MongoDB Atlas yet.
+          </p>
+          <p className="mt-3 text-sm leading-7 text-stone-600">
+            Once the `posts` collection contains published documents, they will
+            appear on this page automatically.
+          </p>
+        </div>
+      )}
     </Container>
   );
 }

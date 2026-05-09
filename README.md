@@ -23,7 +23,7 @@ MONGODB_DB_NAME="monblog"
 MONGODB_POSTS_COLLECTION="posts"
 ```
 
-As long as the placeholder URI is still present, the app falls back to the local seed posts so the pages and APIs keep working during setup.
+As long as the placeholder URI is still present, the app does not load any posts and the health route reports the database as unconfigured.
 
 ## Scripts
 

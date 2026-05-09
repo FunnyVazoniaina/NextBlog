@@ -1,4 +1,4 @@
-import { InMemoryPostRepository } from "@/features/posts/repository/in-memory-post-repository";
+import { EmptyPostRepository } from "@/features/posts/repository/empty-post-repository";
 import { MongoPostRepository } from "@/features/posts/repository/mongodb-post-repository";
 import type { PostRepository } from "@/features/posts/repository/post-repository";
 import { getMongoRuntimeMode } from "@/lib/mongodb/config";
@@ -19,7 +19,7 @@ function warnAboutFallback(mode: ReturnType<typeof getMongoRuntimeMode>) {
       : "MONGODB_URI is missing";
 
   console.warn(
-    `Falling back to local seed posts because ${reason}. Replace the Atlas URI in .env.local to use MongoDB.`,
+    `No MongoDB posts will be loaded because ${reason}. Replace the Atlas URI in .env.local to use MongoDB Atlas.`,
   );
 
   hasWarnedAboutFallback = true;
@@ -34,5 +34,5 @@ export function createPostRepository(): PostRepository {
 
   warnAboutFallback(mode);
 
-  return new InMemoryPostRepository();
+  return new EmptyPostRepository();
 }

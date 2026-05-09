@@ -38,16 +38,16 @@ export async function getDatabaseHealth() {
 
   if (mode === "unconfigured") {
     return {
-      provider: "local-seed",
-      status: "fallback" as const,
+      provider: "mongodb-atlas",
+      status: "unconfigured" as const,
       reason: "MONGODB_URI is missing.",
     };
   }
 
   if (mode === "placeholder") {
     return {
-      provider: "local-seed",
-      status: "fallback" as const,
+      provider: "mongodb-atlas",
+      status: "unconfigured" as const,
       reason: "Placeholder MongoDB Atlas URI detected.",
     };
   }

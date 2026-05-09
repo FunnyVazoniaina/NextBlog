@@ -15,7 +15,7 @@ const backendCapabilities = [
   {
     title: "Repository pattern",
     description:
-      "MongoDB Atlas is now the primary content source, with a local fallback while the placeholder URI is still in use.",
+      "MongoDB Atlas is now the only content source, and the app stays ready for real posts as soon as the collection is populated.",
   },
   {
     title: "Route handlers",
@@ -26,6 +26,7 @@ const backendCapabilities = [
 
 export default async function Home() {
   const featuredPosts = await postService.getFeaturedPosts();
+  const hasFeaturedPosts = featuredPosts.length > 0;
 
   return (
     <>
@@ -87,11 +88,23 @@ export default async function Home() {
             </Link>
           </div>
 
-          <div className="mt-8 grid gap-6 lg:grid-cols-2">
-            {featuredPosts.map((post) => (
-              <PostCard key={post.slug} post={post} />
-            ))}
-          </div>
+          {hasFeaturedPosts ? (
+            <div className="mt-8 grid gap-6 lg:grid-cols-2">
+              {featuredPosts.map((post) => (
+                <PostCard key={post.slug} post={post} />
+              ))}
+            </div>
+          ) : (
+            <div className="mt-8 rounded-[2rem] border border-dashed border-black/15 bg-stone-50 p-8 text-center">
+              <p className="text-lg font-semibold text-stone-900">
+                No featured posts were found in MongoDB Atlas yet.
+              </p>
+              <p className="mt-3 text-sm leading-7 text-stone-600">
+                Add published documents to the `posts` collection and they will
+                appear here automatically.
+              </p>
+            </div>
+          )}
         </section>
       </Container>
     </>
