@@ -21,6 +21,10 @@ cp .env.example .env.local
 MONGODB_URI="mongodb+srv://atlas-user:atlas-password@cluster0.example.mongodb.net/monblog?retryWrites=true&w=majority&appName=monblog"
 MONGODB_DB_NAME="monblog"
 MONGODB_POSTS_COLLECTION="posts"
+MONGODB_POST_VOTES_COLLECTION="post_votes"
+ADMIN_USERNAME="admin"
+ADMIN_PASSWORD="change-me"
+ADMIN_SESSION_SECRET="change-this-secret"
 ```
 
 As long as the placeholder URI is still present, the app does not load any posts and the health route reports the database as unconfigured.
@@ -39,6 +43,15 @@ npm run build
 - `GET /api/health`
 - `GET /api/posts`
 - `GET /api/posts/[slug]`
+- `GET /api/posts/[slug]/vote`
+- `POST /api/posts/[slug]/vote`
+
+## Backoffice
+
+- `GET /admin/login`
+- `GET /admin/posts/new`
+
+The admin area uses a signed cookie session backed only by environment variables, which keeps the setup light while staying private.
 
 ## Project structure
 
@@ -61,5 +74,6 @@ types/
 ## Next steps
 
 - Seed the Atlas `posts` collection with real content
-- Add authentication and an admin writing interface
+- Add post editing and deletion in the backoffice
+- Add vote analytics or moderation rules if needed
 - Add SEO enrichments such as sitemap, RSS, and structured metadata
