@@ -37,14 +37,14 @@ export function BlogArchivePostCard({ post }: BlogArchivePostCardProps) {
         </div>
       </Link>
 
-      <div className="space-y-3">
+      <div className="flex flex-1 flex-col gap-3">
         <div className="text-xs text-zinc-600">
           {siteConfig.author.name} • {shortDateFormatter.format(new Date(post.publishedAt))}
         </div>
 
         <div className="flex items-start justify-between gap-4">
           <Link href={`/blog/${post.slug}`} className="min-w-0">
-            <h2 className="font-display text-[1.9rem] font-semibold leading-tight tracking-tight text-zinc-950">
+            <h2 className="overflow-hidden font-display text-[1.9rem] font-semibold leading-tight tracking-tight text-zinc-950 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]">
               {post.title}
             </h2>
           </Link>
@@ -56,11 +56,13 @@ export function BlogArchivePostCard({ post }: BlogArchivePostCardProps) {
           </Link>
         </div>
 
-        <p className="text-sm leading-7 text-zinc-600">{post.excerpt}</p>
+        <p className="overflow-hidden text-sm leading-7 text-zinc-600 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:3]">
+          {post.excerpt}
+        </p>
 
         <PostSourceLinks links={post.sourceLinks} limit={2} />
 
-        <div className="flex items-end justify-between gap-4">
+        <div className="mt-auto flex items-end justify-between gap-4 pt-2">
           <div className="flex flex-wrap gap-2">
             {post.tags.slice(0, 3).map((tag) => (
               <span
