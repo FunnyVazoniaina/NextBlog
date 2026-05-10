@@ -1,6 +1,9 @@
+import Link from "next/link";
+
 import { Container } from "@/components/layout/container";
-import { PostCard } from "@/components/posts/post-card";
+import { BlogArchivePostCard } from "@/components/posts/blog-archive-post-card";
 import { postService } from "@/features/posts/service/post-service";
+import { formatDate } from "@/lib/utils/format";
 
 export const metadata = {
   title: "Blog",
@@ -9,89 +12,65 @@ export const metadata = {
 
 export default async function BlogPage() {
   const posts = await postService.getPublishedPosts();
-  const hasPosts = posts.length > 0;
-  const categories = [...new Set(posts.map((post) => post.category))];
+  const featuredPosts = await postService.getFeaturedPosts();
 
   return (
-    <Container className="py-4 sm:py-6">
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_20rem]">
-        <div className="space-y-4">
-          <section className="overflow-hidden rounded-[1.6rem] border border-line bg-white">
-            <div className="border-b border-line bg-surface-soft px-5 py-4 sm:px-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">
-                Archive feed
-              </p>
-            </div>
-            <div className="space-y-4 px-5 py-5 sm:px-6">
-              <h1 className="font-display text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">
-                Every published thread in one continuous feed.
-              </h1>
-              <p className="max-w-3xl text-base leading-8 text-zinc-600 sm:text-lg">
-                This archive keeps the Reddit-style reading flow while surfacing
-                longer-form blog posts, experiments, and field notes.
-              </p>
-            </div>
-          </section>
+    <section className="bg-white">
+      <Container className="py-10 sm:py-12 lg:py-14">
+        <div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_18rem]">
+          <div className="space-y-8">
+            <h1 className="font-display text-3xl font-semibold tracking-tight text-zinc-950">
+              All blog posts
+            </h1>
 
-          {hasPosts ? (
-            <div className="space-y-4">
-              {posts.map((post) => (
-                <PostCard key={post.slug} post={post} />
-              ))}
-            </div>
-          ) : (
-            <section className="rounded-[1.5rem] border border-dashed border-line-strong bg-white p-8">
-              <p className="font-display text-2xl font-semibold text-zinc-950">
+            {posts.length > 0 ? (
+              <div className="grid gap-x-5 gap-y-10 lg:grid-cols-2 2xl:grid-cols-3">
+                {posts.map((post) => (
+                  <BlogArchivePostCard key={post.slug} post={post} />
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-[0.9rem] bg-[#fafaf8] px-6 py-10 text-sm leading-7 text-zinc-600">
                 No posts have been published yet.
+              </div>
+            )}
+          </div>
+
+          <aside className="space-y-5 xl:border-l xl:border-line xl:pl-8">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-zinc-500">
+                Featured posts
               </p>
-              <p className="mt-3 max-w-2xl text-sm leading-7 text-zinc-600">
-                Once MongoDB Atlas contains published posts, they will fill this
-                archive feed automatically.
+            </div>
+
+            {featuredPosts.length > 0 ? (
+              <div className="space-y-5">
+                {featuredPosts.map((post) => (
+                  <article key={post.slug} className="space-y-2">
+                    <p className="text-xs text-zinc-500">
+                      {formatDate(post.publishedAt)}
+                    </p>
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="block font-display text-xl font-semibold leading-tight text-zinc-950 transition hover:text-accent"
+                    >
+                      {post.title}
+                    </Link>
+                    <p className="text-sm leading-7 text-zinc-600">
+                      {post.excerpt}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm leading-7 text-zinc-600">
+                Featured posts will appear here once you mark them from the
+                admin area.
               </p>
-            </section>
-          )}
+            )}
+          </aside>
         </div>
-
-        <aside className="space-y-4">
-          <section className="rounded-[1.5rem] border border-line bg-white p-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">
-              Categories
-            </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {categories.length > 0 ? (
-                categories.map((category) => (
-                  <span
-                    key={category}
-                    className="rounded-full border border-line bg-surface-soft px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-zinc-700"
-                  >
-                    {category}
-                  </span>
-                ))
-              ) : (
-                <span className="text-sm text-zinc-500">
-                  Categories will appear once posts are published.
-                </span>
-              )}
-            </div>
-          </section>
-
-          <section className="rounded-[1.5rem] border border-line bg-white p-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">
-              Reading mode
-            </p>
-            <div className="mt-4 space-y-3">
-              <div className="rounded-2xl bg-surface-soft p-4 text-sm text-zinc-700">
-                Cards stay compact in the feed and expand into full threads on
-                open.
-              </div>
-              <div className="rounded-2xl bg-surface-soft p-4 text-sm text-zinc-700">
-                Voting is available on each post page so readers can leave a
-                quick signal.
-              </div>
-            </div>
-          </section>
-        </aside>
-      </div>
-    </Container>
+      </Container>
+    </section>
   );
 }
