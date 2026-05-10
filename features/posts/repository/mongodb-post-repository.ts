@@ -111,4 +111,20 @@ export class MongoPostRepository implements PostRepository {
       content: [...input.content],
     };
   }
+
+  async updatePostFeatured(slug: string, featured: boolean) {
+    const collection = await getPostsCollection();
+    const result = await collection.updateOne(
+      { slug },
+      {
+        $set: {
+          featured,
+        },
+      },
+    );
+
+    if (result.matchedCount === 0) {
+      throw new Error("The selected post could not be found.");
+    }
+  }
 }

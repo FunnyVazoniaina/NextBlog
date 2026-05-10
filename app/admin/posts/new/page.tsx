@@ -4,8 +4,10 @@ import { Container } from "@/components/layout/container";
 import {
   createPostAction,
   signOutAdminAction,
+  toggleFeaturedPostAction,
 } from "@/app/admin/actions";
 import { requireAdminSession } from "@/features/admin-auth/service/admin-auth-service";
+import { postService } from "@/features/posts/service/post-service";
 
 interface NewAdminPostPageProps {
   searchParams: Promise<{
@@ -21,6 +23,7 @@ export default async function NewAdminPostPage({
 
   const { error, success } = await searchParams;
   const today = new Date().toISOString().slice(0, 10);
+  const posts = await postService.getPublishedPosts();
 
   return (
     <Container className="py-16 sm:py-20">
@@ -205,6 +208,54 @@ export default async function NewAdminPostPage({
           </button>
         </div>
       </form>
+
+      <section className="mt-14 space-y-5">
+        <div className="space-y-2">
+          <p className="text-sm font-semibold uppercase tracking-[0.35em] text-amber-700">
+            Featured posts
+          </p>
+          <p className="max-w-2xl text-sm leading-7 text-stone-600">
+            Add or remove published posts from the featured list shown on the public blog.
+          </p>
+        </div>
+
+        <div className="space-y-3">
+          {posts.length > 0 ? (
+            posts.map((post) => (
+              <div
+                key={post.slug}
+                className="flex flex-col gap-4 rounded-[1.25rem] border border-black/10 bg-white px-4 py-4 sm:flex-row sm:items-center sm:justify-between"
+              >
+                <div>
+                  <p className="font-medium text-stone-950">{post.title}</p>
+                  <p className="mt-1 text-sm text-stone-500">
+                    {post.featured ? "Currently featured" : "Not featured"}
+                  </p>
+                </div>
+
+                <form action={toggleFeaturedPostAction}>
+                  <input type="hidden" name="slug" value={post.slug} />
+                  <input
+                    type="hidden"
+                    name="featured"
+                    value={post.featured ? "false" : "true"}
+                  />
+                  <button
+                    type="submit"
+                    className="inline-flex items-center rounded-full border border-black/10 px-4 py-2 text-sm font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950"
+                  >
+                    {post.featured ? "Remove from featured" : "Add to featured"}
+                  </button>
+                </form>
+              </div>
+            ))
+          ) : (
+            <p className="text-sm text-stone-500">
+              Published posts will appear here once you create them.
+            </p>
+          )}
+        </div>
+      </section>
     </Container>
   );
 }

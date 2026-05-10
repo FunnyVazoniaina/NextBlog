@@ -87,3 +87,28 @@ export async function createPostAction(formData: FormData) {
 
   redirect(asRoute(`/admin/posts/new?success=${encodeMessage(createdPostTitle)}`));
 }
+
+export async function toggleFeaturedPostAction(formData: FormData) {
+  await requireAdminSession();
+
+  const slug = readFormValue(formData, "slug");
+  const featured = readFormValue(formData, "featured") === "true";
+
+  try {
+    await postService.updatePostFeatured(slug, featured);
+  } catch (error) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : "The featured post could not be updated.";
+
+    redirect(asRoute(`/admin/posts/new?error=${encodeMessage(message)}`));
+  }
+
+  revalidatePath("/");
+  revalidatePath("/blog");
+  revalidatePath(`/blog/${slug}`);
+  revalidatePath("/sitemap.xml");
+
+  redirect(asRoute("/admin/posts/new"));
+}

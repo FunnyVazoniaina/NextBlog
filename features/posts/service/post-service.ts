@@ -52,6 +52,14 @@ export class PostService {
     return this.repository.createPost(input);
   }
 
+  async updatePostFeatured(slug: string, featured: boolean) {
+    if (!slug.trim()) {
+      throw new Error("A post slug is required to manage featured posts.");
+    }
+
+    return this.repository.updatePostFeatured(slug.trim(), featured);
+  }
+
   parseCreatePostInput(input: RawCreatePostInput): CreatePostInput {
     const title = input.title.trim();
     const excerpt = input.excerpt.trim();

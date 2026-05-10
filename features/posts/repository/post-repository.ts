@@ -5,4 +5,5 @@ export interface PostRepository {
   getFeaturedPosts(): Promise<PostSummary[]>;
   getPublishedPostBySlug(slug: string): Promise<Post | null>;
   createPost(input: CreatePostInput): Promise<Post>;
+  updatePostFeatured(slug: string, featured: boolean): Promise<void>;
 }

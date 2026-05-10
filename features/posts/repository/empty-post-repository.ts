@@ -21,4 +21,10 @@ export class EmptyPostRepository implements PostRepository {
       "MongoDB Atlas must be configured before creating posts from the backoffice.",
     );
   }
+
+  async updatePostFeatured() {
+    throw new Error(
+      "MongoDB Atlas must be configured before managing featured posts.",
+    );
+  }
 }
