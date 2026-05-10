@@ -22,17 +22,12 @@ export default async function Home() {
 
         <Container className="relative py-5 sm:py-6 lg:py-8">
           <div className="px-2 pb-8 pt-4 text-center sm:pb-10 sm:pt-6 lg:pb-12 lg:pt-8">
-            <div className="mx-auto flex max-w-3xl items-center justify-between rounded-[1rem] border border-line bg-white px-4 py-3 shadow-[0_8px_20px_rgba(17,17,17,0.04)]">
-              <div className="flex items-center gap-3">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent-soft text-sm font-semibold text-accent">
-                  *
-                </span>
-                <span className="text-sm font-semibold text-zinc-950">
-                  Funny Vazoniaina
-                </span>
-              </div>
+            <div className="mx-auto flex max-w-[19rem] flex-col gap-3 rounded-[1rem] border border-line bg-white px-3.5 py-3.5 text-left shadow-[0_8px_20px_rgba(17,17,17,0.04)] sm:max-w-3xl sm:flex-row sm:items-center sm:justify-between sm:px-4 sm:py-3">
+              <span className="text-sm font-semibold text-zinc-950">
+                Funny Vazoniaina
+              </span>
 
-              <span className="grid grid-cols-3 gap-1 rounded-xl border border-line bg-white p-2">
+              <span className="grid grid-cols-3 gap-1 rounded-xl border border-line bg-white p-2 self-end sm:self-auto">
                 {Array.from({ length: 9 }).map((_, index) => (
                   <span
                     key={index}
