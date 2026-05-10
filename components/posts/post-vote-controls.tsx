@@ -6,6 +6,7 @@ import type {
   PostVoteSummary,
   VoteDirection,
 } from "@/features/post-votes/types/post-vote";
+import { VoteArrowIcon } from "@/components/posts/vote-arrow-icon";
 
 interface PostVoteControlsProps {
   slug: string;
@@ -77,71 +78,56 @@ export function PostVoteControls({ slug }: PostVoteControlsProps) {
   }
 
   return (
-    <section className="rounded-[1.5rem] border border-line bg-white p-5">
-      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">
+    <section className="space-y-4">
+      <p className="text-sm font-medium text-zinc-700">
         Reader vote
       </p>
 
-      <div className="mt-5 rounded-[1.5rem] border border-line bg-surface-soft p-4">
-        <div className="flex items-center justify-between gap-3">
+      <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1 rounded-full bg-zinc-100 px-1.5 py-1">
           <button
             type="button"
             onClick={() => handleVote("up")}
             disabled={isPending}
-            className={`flex h-12 w-12 items-center justify-center rounded-full border text-lg font-bold transition ${
+            className={`flex h-9 w-9 items-center justify-center rounded-full transition ${
               summary.userVote === "up"
-                ? "border-accent bg-accent text-white"
-                : "border-line bg-white text-zinc-700 hover:border-accent hover:text-accent"
+                ? "bg-accent text-white"
+                : "text-zinc-500 hover:bg-white hover:text-accent"
             }`}
           >
-            ▲
+            <VoteArrowIcon direction="up" className="h-4 w-4" />
           </button>
 
-          <div className="text-center">
-            <p className="font-display text-3xl font-semibold text-zinc-950">
-              {summary.upvotes - summary.downvotes}
-            </p>
-            <p className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-              community score
-            </p>
-          </div>
+          <span className="min-w-8 text-center text-xl font-semibold text-zinc-950">
+            {summary.upvotes - summary.downvotes}
+          </span>
 
           <button
             type="button"
             onClick={() => handleVote("down")}
             disabled={isPending}
-            className={`flex h-12 w-12 items-center justify-center rounded-full border text-lg font-bold transition ${
+            className={`flex h-9 w-9 items-center justify-center rounded-full transition ${
               summary.userVote === "down"
-                ? "border-zinc-950 bg-zinc-950 text-white"
-                : "border-line bg-white text-zinc-700 hover:border-zinc-950 hover:text-zinc-950"
+                ? "bg-zinc-950 text-white"
+                : "text-zinc-500 hover:bg-white hover:text-zinc-950"
             }`}
           >
-            ▼
+            <VoteArrowIcon direction="down" className="h-4 w-4" />
           </button>
         </div>
 
-        <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-          <div className="rounded-2xl bg-white p-3 text-center">
-            <p className="font-semibold text-zinc-950">{summary.upvotes}</p>
-            <p className="mt-1 text-xs uppercase tracking-[0.18em] text-zinc-500">
-              upvotes
-            </p>
-          </div>
-          <div className="rounded-2xl bg-white p-3 text-center">
-            <p className="font-semibold text-zinc-950">{summary.downvotes}</p>
-            <p className="mt-1 text-xs uppercase tracking-[0.18em] text-zinc-500">
-              downvotes
-            </p>
-          </div>
+        <div className="text-sm text-zinc-600">
+          <p>{summary.upvotes} upvotes</p>
+          <p>{summary.downvotes} downvotes</p>
         </div>
       </div>
 
-      <p className="mt-4 text-sm leading-7 text-zinc-600">
+      <p className="text-sm leading-7 text-zinc-600">
         Tap the same arrow again to remove your vote.
       </p>
 
       {errorMessage ? (
-        <p className="mt-4 rounded-2xl bg-accent-soft px-4 py-3 text-sm text-accent">
+        <p className="text-sm text-accent">
           {errorMessage}
         </p>
       ) : null}
