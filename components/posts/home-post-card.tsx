@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { PostCoverImage } from "@/components/posts/post-cover-image";
 import { PostSourceLinks } from "@/components/posts/post-source-links";
 import { siteConfig } from "@/lib/config/site";
 import { formatDate, formatReadingTime } from "@/lib/utils/format";
@@ -12,28 +13,19 @@ interface HomePostCardProps {
 const categoryScenes: Record<
   PostCategory,
   {
-    surface: string;
     role: string;
   }
 > = {
   engineering: {
-    surface:
-      "bg-[radial-gradient(circle_at_22%_28%,rgba(255,214,182,0.95),transparent_18%),radial-gradient(circle_at_78%_22%,rgba(39,82,112,0.85),transparent_22%),linear-gradient(135deg,#83cae7_0%,#9fd5e6_36%,#d8edf5_70%,#f0d49b_100%)]",
     role: "DevOps & Platform Engineer",
   },
   product: {
-    surface:
-      "bg-[radial-gradient(circle_at_25%_26%,rgba(238,248,214,0.9),transparent_20%),radial-gradient(circle_at_70%_24%,rgba(55,86,69,0.55),transparent_20%),linear-gradient(135deg,#b5d8ba_0%,#8ec0a5_38%,#dce6c1_72%,#f2e7c5_100%)]",
     role: "Product-minded Engineer",
   },
   writing: {
-    surface:
-      "bg-[radial-gradient(circle_at_26%_22%,rgba(255,229,217,0.9),transparent_18%),radial-gradient(circle_at_78%_30%,rgba(214,147,93,0.55),transparent_24%),linear-gradient(135deg,#f0c6aa_0%,#ebb07e_42%,#f1d6c6_75%,#f6ece6_100%)]",
     role: "Linux & Systems Writer",
   },
   career: {
-    surface:
-      "bg-[radial-gradient(circle_at_24%_20%,rgba(255,233,219,0.92),transparent_18%),radial-gradient(circle_at_74%_26%,rgba(185,119,74,0.45),transparent_22%),linear-gradient(135deg,#edcfbc_0%,#eeb88f_40%,#f6ddcf_72%,#fbf0ea_100%)]",
     role: "Engineering Mentor",
   },
 };
@@ -45,13 +37,13 @@ export function HomePostCard({ post }: HomePostCardProps) {
     <article className="h-full rounded-[1rem] bg-white p-3 shadow-[0_10px_28px_rgba(17,17,17,0.06)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(17,17,17,0.08)]">
       <div className="flex h-full flex-col">
         <Link href={`/blog/${post.slug}`} className="block">
-          <div
-            className={`relative aspect-[1.44/1] overflow-hidden rounded-[0.8rem] ${scene.surface}`}
-          >
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0)_45%,rgba(0,0,0,0.04)_100%)]" />
-            <div className="absolute left-[13%] top-[18%] h-[44%] w-[26%] rounded-[1rem] bg-white/18 blur-[2px]" />
-            <div className="absolute bottom-[12%] left-[18%] h-[14%] w-[52%] rounded-full bg-white/26 blur-sm" />
-          </div>
+          <PostCoverImage
+            title={post.title}
+            category={post.category}
+            src={post.coverImageUrl}
+            sizes="(min-width: 1024px) 33vw, 100vw"
+            className="aspect-[1.44/1] rounded-[0.8rem]"
+          />
         </Link>
 
         <div className="flex flex-1 flex-col px-0.5 pb-1 pt-4">
