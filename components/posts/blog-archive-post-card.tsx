@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { CompactPostVoteControls } from "@/components/posts/compact-post-vote-controls";
+import { PostSourceLinks } from "@/components/posts/post-source-links";
 import { siteConfig } from "@/lib/config/site";
 import type { PostCategory, PostSummary } from "@/types/post";
 
@@ -56,6 +57,8 @@ export function BlogArchivePostCard({ post }: BlogArchivePostCardProps) {
         </div>
 
         <p className="text-sm leading-7 text-zinc-600">{post.excerpt}</p>
+
+        <PostSourceLinks links={post.sourceLinks} limit={2} />
 
         <div className="flex items-end justify-between gap-4">
           <div className="flex flex-wrap gap-2">

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Container } from "@/components/layout/container";
+import { PostSourceLinks } from "@/components/posts/post-source-links";
 import { PostVoteControls } from "@/components/posts/post-vote-controls";
 import { postService } from "@/features/posts/service/post-service";
 import { siteConfig } from "@/lib/config/site";
@@ -125,6 +126,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     Back to all posts
                   </Link>
                 </div>
+                {post.sourceLinks.length > 0 ? (
+                  <div>
+                    <p className="text-xs font-medium text-zinc-500">
+                      Sources &amp; links
+                    </p>
+                    <PostSourceLinks
+                      links={post.sourceLinks}
+                      className="mt-2 flex-col items-start gap-3"
+                    />
+                  </div>
+                ) : null}
               </div>
             </section>
           </aside>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { PostSourceLinks } from "@/components/posts/post-source-links";
 import { siteConfig } from "@/lib/config/site";
 import { formatDate, formatReadingTime } from "@/lib/utils/format";
 import type { PostCategory, PostSummary } from "@/types/post";
@@ -42,14 +43,16 @@ export function HomePostCard({ post }: HomePostCardProps) {
 
   return (
     <article className="h-full rounded-[1rem] bg-white p-3 shadow-[0_10px_28px_rgba(17,17,17,0.06)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(17,17,17,0.08)]">
-      <Link href={`/blog/${post.slug}`} className="flex h-full flex-col">
-        <div
-          className={`relative aspect-[1.44/1] overflow-hidden rounded-[0.8rem] ${scene.surface}`}
-        >
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0)_45%,rgba(0,0,0,0.04)_100%)]" />
-          <div className="absolute left-[13%] top-[18%] h-[44%] w-[26%] rounded-[1rem] bg-white/18 blur-[2px]" />
-          <div className="absolute bottom-[12%] left-[18%] h-[14%] w-[52%] rounded-full bg-white/26 blur-sm" />
-        </div>
+      <div className="flex h-full flex-col">
+        <Link href={`/blog/${post.slug}`} className="block">
+          <div
+            className={`relative aspect-[1.44/1] overflow-hidden rounded-[0.8rem] ${scene.surface}`}
+          >
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0)_45%,rgba(0,0,0,0.04)_100%)]" />
+            <div className="absolute left-[13%] top-[18%] h-[44%] w-[26%] rounded-[1rem] bg-white/18 blur-[2px]" />
+            <div className="absolute bottom-[12%] left-[18%] h-[14%] w-[52%] rounded-full bg-white/26 blur-sm" />
+          </div>
+        </Link>
 
         <div className="flex flex-1 flex-col px-0.5 pb-1 pt-4">
           <div className="flex flex-wrap items-center gap-2 text-[12px] text-zinc-700">
@@ -58,10 +61,14 @@ export function HomePostCard({ post }: HomePostCardProps) {
             <span>{formatReadingTime(post.readingTimeInMinutes)}</span>
           </div>
 
-          <h2 className="mt-3 font-display text-[1.75rem] font-semibold tracking-tight text-zinc-950">
-            {post.title}
-          </h2>
+          <Link href={`/blog/${post.slug}`} className="mt-3 block">
+            <h2 className="font-display text-[1.75rem] font-semibold tracking-tight text-zinc-950 transition hover:text-accent">
+              {post.title}
+            </h2>
+          </Link>
           <p className="mt-2 text-sm leading-6 text-zinc-600">{post.excerpt}</p>
+
+          <PostSourceLinks links={post.sourceLinks} limit={2} className="mt-4" />
 
           <div className="mt-auto flex items-center gap-3 pt-5">
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f7ede2] text-xs font-semibold text-[#9a5e25]">
@@ -79,7 +86,7 @@ export function HomePostCard({ post }: HomePostCardProps) {
             </div>
           </div>
         </div>
-      </Link>
+      </div>
     </article>
   );
 }

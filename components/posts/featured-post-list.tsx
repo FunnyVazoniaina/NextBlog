@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { PostSourceLinks } from "@/components/posts/post-source-links";
 import { formatDate } from "@/lib/utils/format";
 import type { PostCategory, PostSummary } from "@/types/post";
 
@@ -45,6 +46,7 @@ export function FeaturedPostList({
             >
               {post.title}
             </Link>
+            <PostSourceLinks links={post.sourceLinks} limit={1} />
           </div>
         </article>
       ))}

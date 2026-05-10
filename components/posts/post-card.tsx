@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { PostSourceLinks } from "@/components/posts/post-source-links";
 import { siteConfig } from "@/lib/config/site";
 import { formatDate, formatReadingTime } from "@/lib/utils/format";
 import type { PostSummary } from "@/types/post";
@@ -44,6 +45,8 @@ export function PostCard({ post }: PostCardProps) {
             </h2>
             <p className="text-[15px] leading-7 text-zinc-600">{post.excerpt}</p>
           </Link>
+
+          <PostSourceLinks links={post.sourceLinks} className="mt-4" />
 
           <div className="mt-5 flex flex-wrap gap-2">
             {post.tags.map((tag) => (
