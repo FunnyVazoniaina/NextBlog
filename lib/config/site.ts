@@ -26,11 +26,11 @@ export const siteConfig = {
       label: "GitHub",
     },
     {
-      href: "https://twitter.com",
+      href: "https://x.com/vazoniaina?t=6DPk9ZyaStkWofUObdxNCQ&s=09",
       label: "Twitter",
     },
     {
-      href: "https://www.linkedin.com",
+      href: "https://www.linkedin.com/in/funny-vazoniaina-915429281",
       label: "LinkedIn",
     },
   ],
