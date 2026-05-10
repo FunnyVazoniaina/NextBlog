@@ -20,8 +20,8 @@ export default async function Home() {
       <section className="relative overflow-hidden bg-[#f6f6f3]">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-[18rem] bg-[radial-gradient(circle_at_top,rgba(227,131,35,0.08),transparent_45%)]" />
 
-        <Container className="relative py-6 sm:py-8 lg:py-10">
-          <div className="px-2 pb-16 pt-4 text-center sm:pb-20 lg:pb-24">
+        <Container className="relative py-8 sm:py-10 lg:py-12">
+          <div className="px-2 pb-24 pt-8 text-center sm:pb-28 sm:pt-10 lg:pb-32 lg:pt-12">
             <div className="mx-auto flex max-w-3xl items-center justify-between rounded-full border border-line bg-white px-4 py-3 shadow-[0_8px_20px_rgba(17,17,17,0.04)]">
               <div className="flex items-center gap-3">
                 <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent-soft text-sm font-semibold text-accent">
@@ -42,7 +42,7 @@ export default async function Home() {
               </span>
             </div>
 
-            <div className="mx-auto max-w-4xl py-16 sm:py-20 lg:py-24">
+            <div className="mx-auto max-w-4xl py-20 sm:py-24 lg:py-32">
               <h1 className="font-display text-5xl font-semibold tracking-tight text-zinc-950 sm:text-6xl lg:text-[4.7rem]">
                 Tech Blog & Notes
               </h1>
