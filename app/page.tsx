@@ -2,6 +2,8 @@ import { Container } from "@/components/layout/container";
 import { HomePostCard } from "@/components/posts/home-post-card";
 import { postService } from "@/features/posts/service/post-service";
 
+export const revalidate = 60;
+
 const topicPills = [
   "Linux",
   "DevOps",

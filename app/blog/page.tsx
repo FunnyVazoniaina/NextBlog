@@ -6,6 +6,8 @@ import { FeaturedPostList } from "@/components/posts/featured-post-list";
 import { postService } from "@/features/posts/service/post-service";
 import type { PostSummary } from "@/types/post";
 
+export const revalidate = 60;
+
 export const metadata = {
   title: "Blog",
   description: "All articles published on the personal blog.",
