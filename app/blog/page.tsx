@@ -2,8 +2,8 @@ import Link from "next/link";
 
 import { Container } from "@/components/layout/container";
 import { BlogArchivePostCard } from "@/components/posts/blog-archive-post-card";
+import { FeaturedPostList } from "@/components/posts/featured-post-list";
 import { postService } from "@/features/posts/service/post-service";
-import { formatDate } from "@/lib/utils/format";
 import type { PostSummary } from "@/types/post";
 
 export const metadata = {
@@ -40,7 +40,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const posts = await postService.getPublishedPosts();
   const featuredPosts = await postService.getFeaturedPosts();
   const mobileView = view === "featured" ? "featured" : "all";
-  const mobilePosts = mobileView === "featured" ? featuredPosts : posts;
 
   return (
     <section className="bg-white">
@@ -75,11 +74,18 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
             </div>
           </div>
 
-          {renderPostGrid(
-            mobilePosts,
-            mobileView === "featured"
-              ? "No featured posts have been selected yet."
-              : "No posts have been published yet.",
+          {mobileView === "featured" ? (
+            <div className="space-y-5">
+              <h2 className="font-display text-2xl font-semibold tracking-tight text-zinc-950">
+                Featured posts
+              </h2>
+              <FeaturedPostList
+                posts={featuredPosts}
+                emptyMessage="No featured posts have been selected yet."
+              />
+            </div>
+          ) : (
+            renderPostGrid(posts, "No posts have been published yet.")
           )}
         </div>
 
@@ -93,37 +99,14 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           </div>
 
           <aside className="space-y-5 border-l border-line pl-8">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-zinc-500">
-                Featured posts
-              </p>
-            </div>
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-zinc-950">
+              Featured posts
+            </h2>
 
-            {featuredPosts.length > 0 ? (
-              <div className="space-y-5">
-                {featuredPosts.map((post) => (
-                  <article key={post.slug} className="space-y-2">
-                    <p className="text-xs text-zinc-500">
-                      {formatDate(post.publishedAt)}
-                    </p>
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="block font-display text-xl font-semibold leading-tight text-zinc-950 transition hover:text-accent"
-                    >
-                      {post.title}
-                    </Link>
-                    <p className="text-sm leading-7 text-zinc-600">
-                      {post.excerpt}
-                    </p>
-                  </article>
-                ))}
-              </div>
-            ) : (
-              <p className="text-sm leading-7 text-zinc-600">
-                Featured posts will appear here once you mark them from the
-                admin area.
-              </p>
-            )}
+            <FeaturedPostList
+              posts={featuredPosts}
+              emptyMessage="Featured posts will appear here once you mark them from the admin area."
+            />
           </aside>
         </div>
       </Container>
