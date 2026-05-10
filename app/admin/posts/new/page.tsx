@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Container } from "@/components/layout/container";
+import { PostSourceLinksFieldset } from "@/components/admin/post-source-links-fieldset";
 import {
   createPostAction,
   signOutAdminAction,
@@ -117,6 +118,8 @@ export default async function NewAdminPostPage({
             required
           />
         </label>
+
+        <PostSourceLinksFieldset />
 
         <label className="block space-y-2">
           <span className="text-sm font-medium text-stone-700">

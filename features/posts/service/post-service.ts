@@ -1,6 +1,11 @@
 import { createPostRepository } from "@/features/posts/repository/create-post-repository";
 import type { PostRepository } from "@/features/posts/repository/post-repository";
-import type { CreatePostInput, PostCategory, PostStatus } from "@/types/post";
+import type {
+  CreatePostInput,
+  PostCategory,
+  PostSourceLink,
+  PostStatus,
+} from "@/types/post";
 
 interface RawCreatePostInput {
   slug?: string;
@@ -14,6 +19,8 @@ interface RawCreatePostInput {
   featured: boolean;
   status: string;
   content: string;
+  sourceLinkLabels: string[];
+  sourceLinkUrls: string[];
 }
 
 const categories = new Set<PostCategory>([
@@ -31,6 +38,46 @@ function slugify(value: string) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+}
+
+function normalizeSourceLinks(
+  labels: string[],
+  urls: string[],
+): PostSourceLink[] {
+  const sourceLinks: PostSourceLink[] = [];
+  const total = Math.max(labels.length, urls.length);
+
+  for (let index = 0; index < total; index += 1) {
+    const label = labels[index]?.trim() ?? "";
+    const rawUrl = urls[index]?.trim() ?? "";
+
+    if (!label && !rawUrl) {
+      continue;
+    }
+
+    if (!label || !rawUrl) {
+      throw new Error("Each source link needs both a label and a URL.");
+    }
+
+    let parsedUrl: URL;
+
+    try {
+      parsedUrl = new URL(rawUrl);
+    } catch {
+      throw new Error("Each source link must use a valid absolute URL.");
+    }
+
+    if (parsedUrl.protocol !== "http:" && parsedUrl.protocol !== "https:") {
+      throw new Error("Source links must start with http:// or https://.");
+    }
+
+    sourceLinks.push({
+      label,
+      url: parsedUrl.toString(),
+    });
+  }
+
+  return sourceLinks;
 }
 
 export class PostService {
@@ -78,6 +125,10 @@ export class PostService {
       input.readingTimeInMinutes,
       10,
     );
+    const sourceLinks = normalizeSourceLinks(
+      input.sourceLinkLabels,
+      input.sourceLinkUrls,
+    );
 
     if (!title || !excerpt || !coverLabel || !publishedAt || content.length === 0) {
       throw new Error("Every post field must be filled in before publishing.");
@@ -111,6 +162,7 @@ export class PostService {
       featured: input.featured,
       status: input.status as PostStatus,
       content,
+      sourceLinks,
     };
   }
 }

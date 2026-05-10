@@ -17,6 +17,12 @@ function readFormValue(formData: FormData, key: string) {
   return typeof value === "string" ? value : "";
 }
 
+function readFormValues(formData: FormData, key: string) {
+  return formData
+    .getAll(key)
+    .filter((value): value is string => typeof value === "string");
+}
+
 function encodeMessage(message: string) {
   return encodeURIComponent(message);
 }
@@ -68,6 +74,8 @@ export async function createPostAction(formData: FormData) {
       featured: formData.get("featured") === "on",
       status: readFormValue(formData, "status"),
       content: readFormValue(formData, "content"),
+      sourceLinkLabels: readFormValues(formData, "sourceLinkLabel"),
+      sourceLinkUrls: readFormValues(formData, "sourceLinkUrl"),
     });
 
     await postService.createPost(post);

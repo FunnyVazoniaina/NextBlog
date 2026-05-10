@@ -34,6 +34,7 @@ function mapDocumentToPost(document: WithId<PostDocument>): Post {
     featured: document.featured,
     status: document.status,
     content: document.content,
+    sourceLinks: document.sourceLinks ?? [],
   };
 }
 
@@ -49,6 +50,7 @@ function mapDocumentToSummary(document: WithId<PostDocument>): PostSummary {
     readingTimeInMinutes: document.readingTimeInMinutes,
     featured: document.featured,
     status: document.status,
+    sourceLinks: document.sourceLinks ?? [],
   };
 }
 
@@ -109,6 +111,7 @@ export class MongoPostRepository implements PostRepository {
       ...input,
       tags: [...input.tags],
       content: [...input.content],
+      sourceLinks: input.sourceLinks.map((link) => ({ ...link })),
     };
   }
 

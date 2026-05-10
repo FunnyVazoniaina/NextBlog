@@ -2,6 +2,11 @@ export type PostCategory = "engineering" | "product" | "writing" | "career";
 
 export type PostStatus = "draft" | "published";
 
+export interface PostSourceLink {
+  label: string;
+  url: string;
+}
+
 export interface PostSummary {
   slug: string;
   title: string;
@@ -13,14 +18,16 @@ export interface PostSummary {
   readingTimeInMinutes: number;
   featured: boolean;
   status: PostStatus;
+  sourceLinks: PostSourceLink[];
 }
 
 export interface Post extends PostSummary {
   content: string[];
 }
 
-export interface PostDocument extends Omit<Post, "publishedAt"> {
+export interface PostDocument extends Omit<Post, "publishedAt" | "sourceLinks"> {
   publishedAt: string | Date;
+  sourceLinks?: PostSourceLink[];
 }
 
 export interface CreatePostInput {
@@ -35,4 +42,5 @@ export interface CreatePostInput {
   featured: boolean;
   status: PostStatus;
   content: string[];
+  sourceLinks: PostSourceLink[];
 }
