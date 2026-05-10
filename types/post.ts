@@ -22,3 +22,17 @@ export interface Post extends PostSummary {
 export interface PostDocument extends Omit<Post, "publishedAt"> {
   publishedAt: string | Date;
 }
+
+export interface CreatePostInput {
+  slug: string;
+  title: string;
+  excerpt: string;
+  category: PostCategory;
+  tags: string[];
+  coverLabel: string;
+  publishedAt: string;
+  readingTimeInMinutes: number;
+  featured: boolean;
+  status: PostStatus;
+  content: string[];
+}

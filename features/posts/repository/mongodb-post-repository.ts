@@ -2,7 +2,12 @@ import type { Filter, WithId } from "mongodb";
 
 import type { PostRepository } from "@/features/posts/repository/post-repository";
 import { getPostsCollection } from "@/lib/mongodb/client";
-import type { Post, PostDocument, PostSummary } from "@/types/post";
+import type {
+  CreatePostInput,
+  Post,
+  PostDocument,
+  PostSummary,
+} from "@/types/post";
 
 const publishedPostFilter = {
   status: "published",
@@ -83,5 +88,27 @@ export class MongoPostRepository implements PostRepository {
     }
 
     return mapDocumentToPost(document);
+  }
+
+  async createPost(input: CreatePostInput) {
+    const collection = await getPostsCollection();
+    const existingPost = await collection.findOne({ slug: input.slug });
+
+    if (existingPost) {
+      throw new Error("A post with this slug already exists.");
+    }
+
+    const document: PostDocument = {
+      ...input,
+      publishedAt: input.publishedAt,
+    };
+
+    await collection.insertOne(document);
+
+    return {
+      ...input,
+      tags: [...input.tags],
+      content: [...input.content],
+    };
   }
 }
