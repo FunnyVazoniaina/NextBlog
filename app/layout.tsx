@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Poppins } from "next/font/google";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { PwaInstallPrompt } from "@/components/pwa/pwa-install-prompt";
 import { siteConfig } from "@/lib/config/site";
 
 import "./globals.css";
@@ -20,11 +21,21 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
+  applicationName: siteConfig.author.name,
+  manifest: "/manifest.webmanifest",
   title: {
     default: siteConfig.title,
     template: `%s | ${siteConfig.author.name}`,
   },
   description: siteConfig.description,
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: siteConfig.author.name,
+  },
+  icons: {
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
     title: siteConfig.title,
     description: siteConfig.description,
@@ -32,6 +43,11 @@ export const metadata: Metadata = {
     siteName: siteConfig.author.name,
     type: "website",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#e38323",
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -49,6 +65,7 @@ export default function RootLayout({
           <main className="flex-1">{children}</main>
           <SiteFooter />
         </div>
+        <PwaInstallPrompt />
       </body>
     </html>
   );
