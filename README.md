@@ -25,9 +25,14 @@ MONGODB_POST_VOTES_COLLECTION="post_votes"
 ADMIN_USERNAME="admin"
 ADMIN_PASSWORD="change-me"
 ADMIN_SESSION_SECRET="change-this-secret"
+CLOUDINARY_CLOUD_NAME="your-cloud-name"
+CLOUDINARY_API_KEY="your-api-key"
+CLOUDINARY_API_SECRET="your-api-secret"
+CLOUDINARY_UPLOAD_FOLDER="monblog/posts"
 ```
 
 As long as the placeholder URI is still present, the app does not load any posts and the health route reports the database as unconfigured.
+If you want image uploads from the backoffice, replace the Cloudinary placeholder values in `.env.local` before using the new cover image field.
 
 ## Scripts
 

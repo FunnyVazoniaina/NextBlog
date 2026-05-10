@@ -19,15 +19,18 @@ export interface PostSummary {
   featured: boolean;
   status: PostStatus;
   sourceLinks: PostSourceLink[];
+  coverImageUrl: string | null;
 }
 
 export interface Post extends PostSummary {
   content: string[];
 }
 
-export interface PostDocument extends Omit<Post, "publishedAt" | "sourceLinks"> {
+export interface PostDocument
+  extends Omit<Post, "publishedAt" | "sourceLinks" | "coverImageUrl"> {
   publishedAt: string | Date;
   sourceLinks?: PostSourceLink[];
+  coverImageUrl?: string | null;
 }
 
 export interface CreatePostInput {
@@ -43,4 +46,5 @@ export interface CreatePostInput {
   status: PostStatus;
   content: string[];
   sourceLinks: PostSourceLink[];
+  coverImageUrl: string | null;
 }

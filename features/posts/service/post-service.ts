@@ -163,6 +163,7 @@ export class PostService {
       status: input.status as PostStatus,
       content,
       sourceLinks,
+      coverImageUrl: null,
     };
   }
 }
