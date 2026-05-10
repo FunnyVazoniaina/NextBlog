@@ -72,7 +72,11 @@ export default async function NewAdminPostPage({
         </p>
       ) : null}
 
-      <form action={createPostAction} className="mt-8 grid gap-6 lg:grid-cols-2">
+      <form
+        action={createPostAction}
+        encType="multipart/form-data"
+        className="mt-8 grid gap-6 lg:grid-cols-2"
+      >
         <label className="block space-y-2 lg:col-span-2">
           <span className="text-sm font-medium text-stone-700">Title</span>
           <input
@@ -117,6 +121,22 @@ export default async function NewAdminPostPage({
             className="w-full rounded-2xl border border-black/10 bg-stone-50 px-4 py-3 text-sm text-stone-950 outline-none transition focus:border-amber-500 focus:bg-white"
             required
           />
+        </label>
+
+        <label className="block space-y-2 lg:col-span-2">
+          <span className="text-sm font-medium text-stone-700">
+            Cover image (optional)
+          </span>
+          <input
+            type="file"
+            name="coverImage"
+            accept="image/*"
+            className="w-full rounded-2xl border border-dashed border-black/10 bg-stone-50 px-4 py-3 text-sm text-stone-700 outline-none transition file:mr-4 file:rounded-full file:border-0 file:bg-stone-950 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:border-amber-400 focus:border-amber-500 focus:bg-white"
+          />
+          <p className="text-sm leading-6 text-stone-500">
+            Upload an image to Cloudinary for the post cards. If you leave this
+            empty, the blog will show a generic fallback image instead.
+          </p>
         </label>
 
         <PostSourceLinksFieldset />

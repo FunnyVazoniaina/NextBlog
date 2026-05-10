@@ -10,6 +10,7 @@ import {
   signOutAdmin,
 } from "@/features/admin-auth/service/admin-auth-service";
 import { postService } from "@/features/posts/service/post-service";
+import { uploadPostCoverImage } from "@/lib/cloudinary/upload";
 
 function readFormValue(formData: FormData, key: string) {
   const value = formData.get(key);
@@ -21,6 +22,16 @@ function readFormValues(formData: FormData, key: string) {
   return formData
     .getAll(key)
     .filter((value): value is string => typeof value === "string");
+}
+
+function readFormFile(formData: FormData, key: string) {
+  const value = formData.get(key);
+
+  if (!(value instanceof File) || value.size === 0) {
+    return null;
+  }
+
+  return value;
 }
 
 function encodeMessage(message: string) {
@@ -62,6 +73,7 @@ export async function createPostAction(formData: FormData) {
   let createdPostTitle = "";
 
   try {
+    const coverImageFile = readFormFile(formData, "coverImage");
     const post = postService.parseCreatePostInput({
       slug: readFormValue(formData, "slug"),
       title: readFormValue(formData, "title"),
@@ -78,7 +90,17 @@ export async function createPostAction(formData: FormData) {
       sourceLinkUrls: readFormValues(formData, "sourceLinkUrl"),
     });
 
-    await postService.createPost(post);
+    const coverImageUrl = coverImageFile
+      ? await uploadPostCoverImage({
+          file: coverImageFile,
+          slug: post.slug,
+        })
+      : null;
+
+    await postService.createPost({
+      ...post,
+      coverImageUrl,
+    });
     createdPostSlug = post.slug;
     createdPostTitle = post.title;
   } catch (error) {
