@@ -100,7 +100,7 @@ export function SiteFooter() {
               />
               <FooterLink
                 href={`mailto:${siteConfig.author.email}?subject=Newsletter subscription`}
-                className="inline-flex h-12 items-center justify-center rounded-xl bg-zinc-950 px-5 text-sm font-semibold text-white transition hover:bg-zinc-800 hover:text-white"
+                className="inline-flex h-12 items-center justify-center rounded-xl bg-accent px-5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(227,131,35,0.22)] transition hover:bg-[#cf741c] hover:text-white"
               >
                 Subscribe
               </FooterLink>
