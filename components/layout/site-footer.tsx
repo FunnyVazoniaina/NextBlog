@@ -96,7 +96,7 @@ export function SiteFooter() {
                 type="email"
                 placeholder="Enter your email"
                 aria-label="Email address"
-                className="h-12 flex-1 rounded-xl border border-line bg-white px-4 text-sm text-zinc-950 outline-none transition placeholder:text-zinc-400 focus:border-zinc-300"
+                className="h-[4.35rem] w-full rounded-2xl border border-line bg-white px-5 text-base text-zinc-950 outline-none transition placeholder:text-zinc-400 focus:border-zinc-300 sm:h-12 sm:flex-1 sm:rounded-xl sm:px-4 sm:text-sm"
               />
               <FooterLink
                 href={`mailto:${siteConfig.author.email}?subject=Newsletter subscription`}
