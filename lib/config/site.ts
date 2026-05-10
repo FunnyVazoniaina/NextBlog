@@ -13,11 +13,11 @@ export const siteConfig = {
   navigation: [
     {
       href: "/",
-      label: "Feed",
+      label: "Home",
     },
     {
       href: "/blog",
-      label: "Archive",
+      label: "Blog",
     },
   ],
   socialLinks: [
