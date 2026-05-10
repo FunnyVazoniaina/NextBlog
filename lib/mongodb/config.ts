@@ -1,5 +1,6 @@
 const DEFAULT_DATABASE_NAME = "monblog";
 const DEFAULT_POSTS_COLLECTION_NAME = "posts";
+const DEFAULT_POST_VOTES_COLLECTION_NAME = "post_votes";
 const PLACEHOLDER_ATLAS_HOST = "cluster0.example.mongodb.net";
 
 export type MongoRuntimeMode = "configured" | "placeholder" | "unconfigured";
@@ -11,6 +12,9 @@ export const mongoConfig = {
   postsCollectionName:
     process.env.MONGODB_POSTS_COLLECTION?.trim() ||
     DEFAULT_POSTS_COLLECTION_NAME,
+  postVotesCollectionName:
+    process.env.MONGODB_POST_VOTES_COLLECTION?.trim() ||
+    DEFAULT_POST_VOTES_COLLECTION_NAME,
 };
 
 export function isPlaceholderMongoUri(uri = mongoConfig.uri) {
@@ -63,6 +67,7 @@ export async function getDatabaseHealth() {
       status: "connected" as const,
       database: mongoConfig.databaseName,
       collection: mongoConfig.postsCollectionName,
+      votesCollection: mongoConfig.postVotesCollectionName,
     };
   } catch (error) {
     return {
@@ -70,6 +75,7 @@ export async function getDatabaseHealth() {
       status: "error" as const,
       database: mongoConfig.databaseName,
       collection: mongoConfig.postsCollectionName,
+      votesCollection: mongoConfig.postVotesCollectionName,
       reason:
         error instanceof Error
           ? error.message

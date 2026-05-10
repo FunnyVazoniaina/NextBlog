@@ -1,6 +1,7 @@
 import { MongoClient, ServerApiVersion, type Collection, type Db } from "mongodb";
 
 import { mongoConfig, shouldUseMongoDatabase } from "@/lib/mongodb/config";
+import type { PostVoteDocument } from "@/features/post-votes/types/post-vote";
 import type { PostDocument } from "@/types/post";
 
 declare global {
@@ -44,4 +45,14 @@ export async function getPostsCollection(): Promise<Collection<PostDocument>> {
   const database = await getMongoDatabase();
 
   return database.collection<PostDocument>(mongoConfig.postsCollectionName);
+}
+
+export async function getPostVotesCollection(): Promise<
+  Collection<PostVoteDocument>
+> {
+  const database = await getMongoDatabase();
+
+  return database.collection<PostVoteDocument>(
+    mongoConfig.postVotesCollectionName,
+  );
 }
