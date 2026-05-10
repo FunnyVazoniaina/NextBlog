@@ -5,21 +5,23 @@ import { siteConfig } from "@/lib/config/site";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-black/10 bg-stone-950 text-stone-200">
-      <Container className="flex flex-col gap-6 py-10 sm:flex-row sm:items-end sm:justify-between">
-        <div className="max-w-xl space-y-3">
-          <p className="text-lg font-semibold">{siteConfig.author.name}</p>
-          <p className="text-sm leading-7 text-stone-400">
+    <footer className="border-t border-line bg-white">
+      <Container className="flex flex-col gap-6 py-8 lg:flex-row lg:items-center lg:justify-between">
+        <div className="max-w-2xl space-y-2">
+          <p className="font-display text-lg font-semibold text-zinc-950">
+            {siteConfig.author.name}
+          </p>
+          <p className="text-sm leading-7 text-zinc-600">
             {siteConfig.description}
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-4 text-sm text-stone-300">
+        <div className="flex flex-wrap gap-3 text-sm text-zinc-600">
           {siteConfig.socialLinks.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="transition hover:text-white"
+              className="rounded-full border border-line bg-surface-soft px-4 py-2 transition hover:border-line-strong hover:text-zinc-950"
             >
               {item.label}
             </Link>
