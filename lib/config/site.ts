@@ -77,7 +77,7 @@ export const siteConfig = {
         label: "Food-Suggester",
       },
       {
-        href: "https://www.vazoniaina.com/",
+        href: "https://vazoniaina.com/",
         label: "Portfolio",
       },
       
