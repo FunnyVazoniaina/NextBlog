@@ -71,23 +71,16 @@ export const siteConfig = {
         label: "Grafana",
       },
     ],
-    buildWith: [
+    products: [
       {
         href: "https://nextjs.org/",
-        label: "Next.js",
+        label: "Food-Suggester",
       },
       {
-        href: "https://www.mongodb.com/products/platform/atlas-database",
-        label: "MongoDB Atlas",
+        href: "https://www.vazoniaina.com/",
+        label: "Portfolio",
       },
-      {
-        href: "https://www.typescriptlang.org/",
-        label: "TypeScript",
-      },
-      {
-        href: "https://vercel.com/",
-        label: "Vercel",
-      },
+      
     ],
   },
 } as const;

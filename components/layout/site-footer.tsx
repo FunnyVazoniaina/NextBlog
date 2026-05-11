@@ -17,8 +17,8 @@ const footerColumns = [
     links: siteConfig.socialLinks,
   },
   {
-    title: "Build with",
-    links: siteConfig.footer.buildWith,
+    title: "Products",
+    links: siteConfig.footer.products,
   },
 ] as const;
 
